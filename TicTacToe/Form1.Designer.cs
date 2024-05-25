@@ -148,6 +148,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(466, 92);
             textBox1.TabIndex = 9;
+            textBox1.Text = "Tic Tac Toe";
             textBox1.TextAlign = HorizontalAlignment.Center;
             // 
             // Form1
@@ -177,15 +178,19 @@
 
         #endregion
 
-        private Button button1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
-        private Button button5;
-        private Button button6;
-        private Button button7;
-        private Button button8;
-        private Button button9;
+             
+
+        public static Button button1;
+        public static Button button2;
+        public static Button button3;
+        public static Button button4;
+        public static Button button5;
+        public static Button button6;
+        public static Button button7;
+        public static Button button8;
+        public static Button button9;
         public static TextBox textBox1;
+
+        public static Button[] buttons = [button1, button2, button3, button4, button5, button6, button7, button8, button9];
     }
 }

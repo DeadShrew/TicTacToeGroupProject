@@ -1,6 +1,6 @@
 
 
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace TicTacToe
 {
@@ -16,7 +16,8 @@ namespace TicTacToe
             // see https://aka.ms/applicationconfiguration.
          
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());          
+            Application.Run(new Form1());       
+            
 
         }    
     }

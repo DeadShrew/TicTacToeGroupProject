@@ -11,17 +11,8 @@ namespace TicTacToe
     {
         
         public static Boolean player1_turn;
+        public static Boolean hasWon = false;
         public static int turnCount = 0;
-        
-        public static void initializeHeader()
-        {
-            Form1.textBox1.Text = "Tic-Tac-Toe";
-        }
-
-        public static void sleep()
-        {
-            Thread.Sleep(20000);
-        }
 
         public static void firstTurn() 
         {
@@ -35,26 +26,152 @@ namespace TicTacToe
                 player1_turn = true;
                 string xTurn = "X turn";
                 Form1.textBox1.Text = xTurn; 
-                Form1.textBox1.Refresh();
 
             } else
             {
                 player1_turn= false;
                 string oTurn = "O turn";
                 Form1.textBox1.Text = oTurn;
-                Form1.textBox1.Refresh();
+ 
             }
 
         }
 
         public static void checkForWinner() 
-        { 
+        {
             
+
+            if(
+                (Form1.button1.Text == "X") &&
+                (Form1.button2.Text == "X") &&
+                (Form1.button3.Text == "X"))  {
+
+                PlayerX.xWins();
+            }
+            if (
+                (Form1.button4.Text == "X") &&
+                (Form1.button5.Text == "X") &&
+                (Form1.button6.Text == "X"))
+            {
+
+                PlayerX.xWins();
+            }
+            if (
+                (Form1.button7.Text == "X") &&
+                (Form1.button8.Text == "X") &&
+                (Form1.button9.Text == "X"))
+            {
+
+                PlayerX.xWins();
+            }
+            if (
+                (Form1.button1.Text == "X") &&
+                (Form1.button4.Text == "X") &&
+                (Form1.button7.Text == "X"))
+            {
+
+                PlayerX.xWins();
+            }
+            if (
+                (Form1.button2.Text == "X") &&
+                (Form1.button5.Text == "X") &&
+                (Form1.button8.Text == "X"))
+            {
+
+                PlayerX.xWins();
+            }
+            if (
+                (Form1.button3.Text == "X") &&
+                (Form1.button6.Text == "X") &&
+                (Form1.button9.Text == "X"))
+            {
+
+                PlayerX.xWins();
+            }
+            if (
+                (Form1.button1.Text == "X") &&
+                (Form1.button5.Text == "X") &&
+                (Form1.button9.Text == "X"))
+            {
+
+                PlayerX.xWins(); ;
+            }
+            if (
+                (Form1.button3.Text == "X") &&
+                (Form1.button5.Text == "X") &&
+                (Form1.button7.Text == "X"))
+            {
+
+                PlayerX.xWins();
+            }
+            ///////////////////////////////////////////////////////
+            if (
+                (Form1.button1.Text == "O") &&
+                (Form1.button2.Text == "O") &&
+                (Form1.button3.Text == "O"))
+            {
+
+                PlayerO.oWins();
+            }
+            if (
+                (Form1.button4.Text == "O") &&
+                (Form1.button5.Text == "O") &&
+                (Form1.button6.Text == "O"))
+            {
+
+                PlayerO.oWins();
+            }
+            if (
+                (Form1.button7.Text == "O") &&
+                (Form1.button8.Text == "O") &&
+                (Form1.button9.Text == "O"))
+            {
+
+                PlayerO.oWins();
+            }
+            if (
+                (Form1.button1.Text == "O") &&
+                (Form1.button4.Text == "O") &&
+                (Form1.button7.Text == "O"))
+            {
+
+                PlayerO.oWins();
+            }
+            if (
+                (Form1.button2.Text == "O") &&
+                (Form1.button5.Text == "O") &&
+                (Form1.button8.Text == "O"))
+            {
+
+                PlayerO.oWins();
+            }
+            if (
+                (Form1.button3.Text == "O") &&
+                (Form1.button6.Text == "O") &&
+                (Form1.button9.Text == "O"))
+            {
+
+                PlayerO.oWins();
+            }
+            if (
+                (Form1.button1.Text == "O") &&
+                (Form1.button5.Text == "O") &&
+                (Form1.button9.Text == "O"))
+            {
+
+                PlayerO.oWins();
+            }
+            if (
+                (Form1.button3.Text == "O") &&
+                (Form1.button5.Text == "O") &&
+                (Form1.button7.Text == "O"))
+            {
+
+                PlayerO.oWins();
+            }
+
+            if (turnCount == 9 && hasWon == false) { Form1.textBox1.Text = "Draw"; }
         }
-
-        public static void xWins(int a, int b, int c) { }
-
-        public static void oWins(int a, int b, int c) { }
 
         public static Boolean getPlayer1Turn()
         {
