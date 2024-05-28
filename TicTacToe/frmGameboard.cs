@@ -1,11 +1,11 @@
+using System.Numerics;
+
 namespace TicTacToe
 {
     public partial class frmGameboard : Form
     {
         Button[] btnCells;
         chrPlayer[] chrPlayers;
-
-        private bool IsWinnerDetermined = false;
 
         public frmGameboard()
         {
@@ -28,6 +28,7 @@ namespace TicTacToe
 
         private void InitializeFirstTurn()
         {
+            // Could eventually make into a new class if needed, something for specifically spawning
             chrPlayers = new chrPlayer[] { new chrPlayer("X", Color.Green), new chrPlayer("O", Color.Red) };
 
             stateTurnQueue.IntializeTurnQueue(chrPlayers.Length);
@@ -35,121 +36,132 @@ namespace TicTacToe
             chrPlayer currentPlayer = chrPlayers[stateTurnQueue.AssignFirstTurnPlayerIndex()];
 
             stateTurnQueue.currentPlayer = currentPlayer;
-            ShowCurrentPlayerTurn();
+            txtHeader.Text = ShowCurrentPlayerTurn();
         }
 
-        private void SetGameManagerBoard()
+        private string ShowCurrentPlayerTurn()
         {
-            int I = 0;
-            foreach (Button btnCell in btnCells)
-            {
-                stateConditionsManager.board[I] = btnCell.Text;
-                I++;
-            }
+            return String.Format("{0} turn", stateTurnQueue.currentPlayer.playerSymbol);
         }
 
-        private void ShowCurrentPlayerTurn()
+        private string ProcessTurn(Button btnCell)
         {
-            txtHeader.Text = String.Format("{0} turn", stateTurnQueue.currentPlayer.playerSymbol);
-        }
-
-        private void ProcessTurn(Button btnCell)
-        {
-            string headerTxt = "";
-
-            stateConditionsManager.turnCount++;
-
             if (stateConditionsManager.hasWinner)
-                return;
+                return txtHeader.Text;
 
             if (!String.IsNullOrEmpty(btnCell.Text))
-                return;
+                return txtHeader.Text;
 
             btnCell.Text = stateTurnQueue.currentPlayer.playerSymbol;
 
-            SetGameManagerBoard();
+            // stateTurnManager.turnCount++;
+            stateTurnManager.IncrementTurn();
 
-            // One player has to at least have completed 3 turns and the other 2, so the minimum amount of turns you can win in is 5
-            if (stateConditionsManager.turnCount >= 5)
+            chrPlayer? winner = null;
+
+            string headerTxt = "";
+
+            if (CheckForWinner(stateTurnManager.turnCount, out headerTxt, out winner))
             {
-                // This should be fine because it's turn based, which means that one person can win per turn only
-                foreach (chrPlayer player in chrPlayers)
-                {
-                    if (stateConditionsManager.DetermineWinner(player.playerSymbol, out headerTxt))
-                    {
-                        IsWinnerDetermined = true;
-
-                        ShowWinner(headerTxt, player.foreColor);
-                        break;
-                    }
-                }
+                stateConditionsManager.hasWinner = true;
+                return ShowWinner(headerTxt, winner.foreColor);
             }
 
-            // Oh this entire giant function could be refactored even further.
-            if (!IsWinnerDetermined)
-            {
-                if (stateConditionsManager.turnCount != 9)
-                {
-                    stateTurnQueue.currentPlayer = chrPlayers[stateTurnQueue.UpdateCurrentPlayerIndex()];
-                    ShowCurrentPlayerTurn();
-                }
-                else
-                    txtHeader.Text = headerTxt;
-            }
+            // Check to see if the turn count is 9
+            if (stateConditionsManager.CatsGame(stateTurnManager.turnCount,out headerTxt))
+                return headerTxt;
+
+            if (SetNextPlayer(stateTurnManager.turnCount))
+                return ShowCurrentPlayerTurn();
+
+            return txtHeader.Text;
         }
 
-        private void ShowWinner(string headerTxt, Color winnerColor)
+        private bool SetNextPlayer(int currentTurn)
         {
-            txtHeader.Text = headerTxt;
+            if (currentTurn == 9)
+                return false;
 
+            stateTurnQueue.currentPlayer = chrPlayers[stateTurnQueue.UpdateCurrentPlayerIndex()];
+
+            return true;
+        }
+
+        private bool CheckForWinner(int currentTurn, out string headerTxt, out chrPlayer? winner)
+        {
+            headerTxt = "";
+            winner = null;
+
+            if (currentTurn < 5)
+                return false;
+
+            stateConditionsManager.SetGameManagerBoard(btnCells);
+
+            // This should be fine because it's turn based, which means that one person can win per turn only
+            // Only check whoever just acted because if the person won then that means the game ends right there.
+           chrPlayer player = stateTurnQueue.currentPlayer;
+            
+            if (stateConditionsManager.DetermineWinner(currentTurn, player.playerSymbol, out headerTxt))
+            {
+                winner = player;
+                return true;
+            }
+
+            return false;
+        }
+
+        private string ShowWinner(string headerTxt, Color winnerColor)
+        {
             // Get the winner, color the winning cells the actual winner's color
             foreach (int winningCell in stateConditionsManager.winningCells)
                 btnCells[winningCell].ForeColor = winnerColor;
+
+            return headerTxt;
         }
 
         private void btnCell1_Click(object sender, EventArgs e)
         {
-            ProcessTurn(btnCells[0]);
+            txtHeader.Text = ProcessTurn(btnCells[0]);
         }
 
         private void btnCell2_Click(object sender, EventArgs e)
         {
-            ProcessTurn(btnCells[1]);
+            txtHeader.Text = ProcessTurn(btnCells[1]);
         }
 
         private void btnCell3_Click(object sender, EventArgs e)
         {
-            ProcessTurn(btnCells[2]);
+            txtHeader.Text = ProcessTurn(btnCells[2]);
         }
 
         private void btnCell4_Click(object sender, EventArgs e)
         {
-            ProcessTurn(btnCells[3]);
+            txtHeader.Text = ProcessTurn(btnCells[3]);
         }
 
         private void btnCell5_Click(object sender, EventArgs e)
         {
-            ProcessTurn(btnCells[4]);
+            txtHeader.Text = ProcessTurn(btnCells[4]);
         }
 
         private void btnCell6_Click(object sender, EventArgs e)
         {
-            ProcessTurn(btnCells[5]);
+            txtHeader.Text = ProcessTurn(btnCells[5]);
         }
 
         private void btnCell7_Click(object sender, EventArgs e)
         {
-            ProcessTurn(btnCells[6]);
+            txtHeader.Text = ProcessTurn(btnCells[6]);
         }
 
         private void btnCell8_Click(object sender, EventArgs e)
         {
-            ProcessTurn(btnCells[7]);
+            txtHeader.Text = ProcessTurn(btnCells[7]);
         }
 
         private void btnCell9_Click(object sender, EventArgs e)
         {
-            ProcessTurn(btnCells[8]);
+            txtHeader.Text = ProcessTurn(btnCells[8]);
         }
     }
 }

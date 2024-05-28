@@ -19,28 +19,44 @@ namespace TicTacToe
         public static string[] board = new string[9];
         public static int[] winningCells = new int[] { };
 
+        public static string[] SetGameManagerBoard(Button[] btnCells)
+        {
+            int I = 0;
+            foreach (Button btnCell in btnCells)
+            {
+                board[I] = btnCell.Text;
+                I++;
+            }
+
+            return board;
+        }
+
         // Check the player whose turn just finished first
-        public static bool DetermineWinner(string player, out string header)
+        public static bool DetermineWinner(int turnCount, string player, out string header)
         {
             header = "";
 
-            if (turnCount < 4)
+            if (turnCount < 5)
                 return false;
 
             if (HasWon(player))
             {
                 header = System.String.Format("{0} wins!", player);
-                hasWinner = true;
                 return true;
             }
 
-            if (turnCount == 9 && !hasWinner)
-            {
-                header = "Cat's Game";
-                return false;
-            }
-
             return false;
+        }
+
+        public static bool CatsGame(int turnCount, out string headerTxtDraw)
+        {
+            headerTxtDraw = "";
+
+            if (turnCount != 9)
+                return false;
+
+            headerTxtDraw = "Cat's Game";
+            return true;
         }
 
         // https://fowlie.github.io/2018/08/24/winning-algorithm-for-tic-tac-toe-using-a-3x3-magic-square/
