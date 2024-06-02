@@ -4,8 +4,8 @@ namespace TicTacToe
 {
     public partial class frmGameboard : Form
     {
-        Button[] btnCells;
-        chrPlayer[] chrPlayers;
+        public Button[] btnCells { get; set; }
+        public chrPlayer[] chrPlayers { get; set; }
 
         public frmGameboard()
         {
@@ -14,14 +14,21 @@ namespace TicTacToe
             SetGameState();
         }
 
-        private void SetGameState()
+        public Button[] SetButtonCells()
         {
             btnCells = new Button[]
             {
-                btnCell1, btnCell2, btnCell3, 
-                btnCell4, btnCell5, btnCell6, 
+                btnCell1, btnCell2, btnCell3,
+                btnCell4, btnCell5, btnCell6,
                 btnCell7, btnCell8, btnCell9
             };
+
+            return btnCells;
+        }
+
+        private void SetGameState()
+        {
+            SetButtonCells();
 
             InitializeFirstTurn();
         }
@@ -39,12 +46,12 @@ namespace TicTacToe
             txtHeader.Text = ShowCurrentPlayerTurn();
         }
 
-        private string ShowCurrentPlayerTurn()
+        public string ShowCurrentPlayerTurn()
         {
             return String.Format("{0} turn", stateTurnQueue.currentPlayer.playerSymbol);
         }
 
-        private string ProcessTurn(Button btnCell)
+        public string ProcessTurn(Button btnCell)
         {
             if (stateConditionsManager.hasWinner)
                 return txtHeader.Text;
