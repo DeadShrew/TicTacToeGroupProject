@@ -8,8 +8,8 @@ namespace TicTacToe
 {
     public class chrPlayer
     {
-        public string playerSymbol { get; set; }  = "";
-        public Color foreColor { get; set; }
+        public string playerSymbol  = "";
+        public Color foreColor;
 
         public chrPlayer() 
         { 

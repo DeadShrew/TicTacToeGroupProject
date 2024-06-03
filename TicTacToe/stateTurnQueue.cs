@@ -8,9 +8,9 @@ namespace TicTacToe
 {
     public static class stateTurnQueue
     {
-        public static int amtPlayers { get; set; } = 0;
+        public static int amtPlayers = 0;
         public static int currentPlayerIndex;
-        public static chrPlayer currentPlayer { get; set; }
+        public static chrPlayer currentPlayer;
 
         public static int AssignFirstTurnPlayerIndex()
         {
