@@ -75,7 +75,7 @@ namespace TicTacToe
             }
 
             // Check to see if the turn count is 9
-            if (stateConditionsManager.CatsGame(stateTurnManager.turnCount,out headerTxt))
+            if (stateConditionsManager.CatsGame(stateTurnManager.turnCount, out headerTxt))
                 return headerTxt;
 
             if (SetNextPlayer(stateTurnManager.turnCount))
@@ -106,8 +106,8 @@ namespace TicTacToe
 
             // This should be fine because it's turn based, which means that one person can win per turn only
             // Only check whoever just acted because if the person won then that means the game ends right there.
-           chrPlayer player = stateTurnQueue.currentPlayer;
-            
+            chrPlayer player = stateTurnQueue.currentPlayer;
+
             if (stateConditionsManager.DetermineWinner(currentTurn, player.playerSymbol, out headerTxt))
             {
                 winner = player;
@@ -169,6 +169,22 @@ namespace TicTacToe
         private void btnCell9_Click(object sender, EventArgs e)
         {
             txtHeader.Text = ProcessTurn(btnCells[8]);
+        }
+
+        private void resetBtn_Click(object sender, EventArgs e)
+        {
+            this.Controls.Clear();
+
+            if (stateConditionsManager.hasWinner = true)
+            {
+                stateConditionsManager.hasWinner = false;
+            }
+
+            stateTurnManager.ResetTurn();
+            stateTurnQueue.ResetTurnQueue();
+
+            this.InitializeComponent();
+            this.SetGameState();
         }
     }
 }

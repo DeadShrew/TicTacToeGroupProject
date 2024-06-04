@@ -31,5 +31,11 @@ namespace TicTacToe
         {
             return currentPlayerIndex = (currentPlayerIndex + 1) % amtPlayers;
         }
+
+        public static void ResetTurnQueue()
+        {
+            AssignFirstTurnPlayerIndex();
+            IntializeTurnQueue(amtPlayers);
+        }
     }
 }

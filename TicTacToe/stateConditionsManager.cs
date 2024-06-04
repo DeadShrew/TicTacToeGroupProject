@@ -75,5 +75,10 @@ namespace TicTacToe
                                 }
             return false;
         }
+
+        public static void GameReset()
+        {
+
+        }
     }
 }

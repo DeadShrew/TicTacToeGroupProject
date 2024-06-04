@@ -14,5 +14,10 @@ namespace TicTacToe
         {
             return turnCount = Math.Clamp(turnCount + 1, 1, 9);
         }
+
+        public static int ResetTurn()
+        {
+            return turnCount = 0;
+        }
     }
 }
